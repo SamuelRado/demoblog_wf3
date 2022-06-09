@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table class="table">
+		<thead>
+			<th>Contenu</th>
+			<th>Date</th>
+			<th>Article</th>
+		</thead>
+		<tbody>
+			{% for comment in comments %}
+				<tr>
+					<td>{{ comment.content }}</td>
+					<td>{{ comment.createdAt|date('d/m/Y') }}</td>
+					<td><a href="{{ path('blog_show', {id: comment.article.id}) }}" class="btn btn-success">Lien vers l'article</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

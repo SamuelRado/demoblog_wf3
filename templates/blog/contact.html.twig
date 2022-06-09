@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	{{ form_start(formContact) }}
+
+	{{ form_row(formContact.firstname, {
+        label: "Prénom"
+    }) }}
+
+	{{ form_row(formContact.lastname, {
+        label: "Nom"
+    }) }}
+
+	{{ form_row(formContact.email) }}
+
+	{{ form_row(formContact.message) }}
+
+    <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
+
+	{{ form_end(formContact) }}
+
+{% endblock %}

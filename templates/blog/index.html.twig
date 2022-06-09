@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles
+{% endblock %}
+
+{% block body %}
+
+	<section class="row articles">
+
+		{% for article in articles %}
+
+			{# article : var de réception #}
+			{# articles : tableau envoyé depuis index() #}
+
+				<article class="col-md-4 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1"> <h2>{{ article.title }}</h2>
+
+				<div class="metadata">Ecrit le
+					{{ article.createdAt|date('d/m/Y à H:i:s') }}
+					dans la catégorie {{ article.category.title }}</div>
+				<div class="content">
+					<img class="img-fluid" src="{{ asset('images/articles/' ~ article.image) }}" alt="">
+					{{ article.content|raw }}
+					{# raw permet d'interpréter les balises html #}
+
+					<a href="{{ path('blog_show', {id: article.id}) }}" class="btn btn-primary">Lire la suite</a>
+				</div>
+			</article>
+
+		{% endfor %}
+
+	</section>
+
+{% endblock %}
