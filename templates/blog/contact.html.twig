@@ -2,6 +2,14 @@
 
 {% block body %}
 
+	{% for message in app.flashes('success') %}
+		
+		<div class="col-md-5 alert alert-success text-center">
+			{{ message }}
+		</div>
+
+	{% endfor %}
+
 	{{ form_start(formContact) }}
 
 	{{ form_row(formContact.firstname, {

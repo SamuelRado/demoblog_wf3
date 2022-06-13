@@ -8,6 +8,7 @@ use App\Entity\Contact;
 use App\Form\ArticleType;
 use App\Form\ContactType;
 use App\Form\PostCommentType;
+use App\Notification\ContactNotification;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -120,7 +121,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/contact", name="blog_contact")
      */
-    public function contact(Request $request, EntityManagerInterface $manager)
+    public function contact(Request $request, EntityManagerInterface $manager, ContactNotification $cn)
     {
         $contact = new Contact;
         $form = $this->createForm(ContactType::class, $contact);
@@ -130,6 +131,11 @@ class BlogController extends AbstractController
         {
             $manager->persist($contact);
             $manager->flush();
+            $cn->notify($contact);
+            $this->addFlash('success', 'Votre email a bien été envoyé !');
+            // addFlash() permet de créer des msg de notification stockés dans la session de l'utilisateur
+            // il est supprimé après affichage
+            return $this->redirectToRoute('blog_contact');
         }
 
         return $this->renderForm("blog/contact.html.twig", [
